@@ -1,5 +1,6 @@
 package cookie.texture.mixin;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.entity.LivingRenderer;
 import net.minecraft.client.render.entity.PlayerRenderer;
 import net.minecraft.client.render.model.ModelBase;
@@ -24,6 +25,7 @@ public abstract class PlayerRendererMixin extends LivingRenderer<EntityPlayer> {
 		if (itemstack != null) {
 			if (itemstack.getItem() instanceof ItemArmor && !itemstack.getDisplayName().equals(itemstack.getItem().getTranslatedName(itemstack))) {
 				String path = "/armor/" + itemstack.getItemName().replace(".", "_") + "/" + itemstack.getDisplayName().replace(" ", "_").replace(TextFormatting.ITALIC.toString(), "") + "_" + (renderPass != 2 ? 1 : 2) + ".png";
+				if (Minecraft.getMinecraft(Minecraft.class).texturePackList.selectedTexturePack.getResourceAsStream(path) == null) return;
 				loadTexture(path);
 			}
 		}
