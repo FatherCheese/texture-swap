@@ -11,16 +11,13 @@ import turniplabs.halplibe.util.GameStartEntrypoint;
 import turniplabs.halplibe.util.RecipeEntrypoint;
 
 
-public class TextureSwap implements GameStartEntrypoint {
+public class TextureSwap implements ModInitializer {
     public static final String MOD_ID = "textureswap";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static Gson GSON = new Gson();
-	@Override
-	public void beforeGameStart() {
-		LOGGER.info("TextureSwap initialized.");
-	}
 
 	@Override
-	public void afterGameStart() {
+	public void onInitialize() {
+		LOGGER.info("TextureSwap has been initialized.");
 	}
 }

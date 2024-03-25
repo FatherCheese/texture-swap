@@ -22,7 +22,7 @@
 
   "environment": "*",
   "entrypoints": {
-		"afterGameStart": [
+		"main": [
 			"cookie.texture.TextureSwap"
 		]
   },
