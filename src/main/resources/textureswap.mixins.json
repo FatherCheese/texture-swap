@@ -1,13 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "cookie.texture.mixin",
+  "package": "cookie.textureswap.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ItemRendererMixin",
-    "ItemStackMixin",
-    "PlayerRendererMixin",
-    "RenderEngineMixin"
+    "ItemModelStandardMixin",
+    "PlayerRendererMixin"
   ],
   "client": [
   ],
