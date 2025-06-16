@@ -4,11 +4,20 @@
   "package": "cookie.textureswap.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ItemModelStandardMixin",
-    "PlayerRendererMixin",
-    "RenderEngineMixin"
   ],
   "client": [
+    "PlayerRendererMixin",
+    "TextureManagerMixin",
+    "item.ItemModelCoalMixin",
+    "item.ItemModelDoorPaintedMixin",
+    "item.ItemModelDyeMixin",
+    "item.ItemModelFishingRodMixin",
+    "item.ItemModelLabelMixin",
+    "item.ItemModelMapMixin",
+    "item.ItemModelPaintbrushMixin",
+    "item.ItemModelQuiverMixin",
+    "item.ItemModelSignPaintedMixin",
+    "item.ItemModelStandardMixin"
   ],
   "injectors": {
     "defaultRequire": 1

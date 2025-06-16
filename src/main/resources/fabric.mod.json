@@ -24,8 +24,11 @@
   "entrypoints": {
 		"main": [
 			"cookie.textureswap.TextureSwap"
+		],
+		"client": [
+			"cookie.textureswap.TextureSwapClient"
 		]
-  },
+	},
   "mixins": [
 		"textureswap.mixins.json"
   ],
