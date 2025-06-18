@@ -1,6 +1,6 @@
-package cookie.textureswap.mixin;
+package cookie.textureswap.extra.mixin;
 
-import cookie.textureswap.TextureJsonLoader;
+import cookie.textureswap.client.JSONDeserializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.TextureManager;
@@ -17,6 +17,6 @@ public abstract class TextureManagerMixin {
 
 	@Inject(method = "refreshTextures", at = @At("HEAD"))
 	private void textureswap_refreshTextures(List<Throwable> errors, CallbackInfo ci) {
-		TextureJsonLoader.loadTexturesFromJson();
+		JSONDeserializer.preloadTextures();
 	}
 }

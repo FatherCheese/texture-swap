@@ -1,6 +1,6 @@
-package cookie.textureswap.mixin.item;
+package cookie.textureswap.extra.mixin.item;
 
-import cookie.textureswap.ITextureSwapHelper;
+import cookie.textureswap.extra.ITextureSwapHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.item.model.ItemModelDoorPainted;

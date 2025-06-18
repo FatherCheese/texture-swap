@@ -1,9 +1,9 @@
-package cookie.textureswap.mixin.item;
+package cookie.textureswap.extra.mixin.item;
 
-import cookie.textureswap.ITextureSwapHelper;
+import cookie.textureswap.extra.ITextureSwapHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.item.model.ItemModelFishingRod;
+import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.model.ItemModelStandard;
 import net.minecraft.client.render.texture.stitcher.IconCoordinate;
 import net.minecraft.core.entity.Entity;
@@ -15,12 +15,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Environment(EnvType.CLIENT)
-@Mixin(value = ItemModelFishingRod.class, remap = false)
-public abstract class ItemModelFishingRodMixin extends ItemModelStandard implements ITextureSwapHelper {
-	public ItemModelFishingRodMixin(Item item, String namespace) {
-		super(item, namespace);
+@Mixin(value = ItemModelStandard.class, remap = false)
+public abstract class ItemModelStandardMixin extends ItemModel implements ITextureSwapHelper {
+	public ItemModelStandardMixin(Item item) {
+		super(item);
 	}
-
 
 	@Inject(method = "getIcon", at = @At("HEAD"), cancellable = true)
 	private void textureswap_getIcon(Entity entity, ItemStack stack, CallbackInfoReturnable<IconCoordinate> cir) {

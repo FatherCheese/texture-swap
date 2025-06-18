@@ -1,9 +1,9 @@
-package cookie.textureswap.mixin.item;
+package cookie.textureswap.extra.mixin.item;
 
-import cookie.textureswap.ITextureSwapHelper;
+import cookie.textureswap.extra.ITextureSwapHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.item.model.ItemModelPaintbrush;
+import net.minecraft.client.render.item.model.ItemModelLabel;
 import net.minecraft.client.render.item.model.ItemModelStandard;
 import net.minecraft.client.render.texture.stitcher.IconCoordinate;
 import net.minecraft.core.entity.Entity;
@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Environment(EnvType.CLIENT)
-@Mixin(value = ItemModelPaintbrush.class, remap = false)
-public abstract class ItemModelPaintbrushMixin extends ItemModelStandard implements ITextureSwapHelper {
-	public ItemModelPaintbrushMixin(Item item, String namespace) {
+@Mixin(value = ItemModelLabel.class, remap = false)
+public abstract class ItemModelLabelMixin extends ItemModelStandard implements ITextureSwapHelper {
+	public ItemModelLabelMixin(Item item, String namespace) {
 		super(item, namespace);
 	}
 
