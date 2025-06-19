@@ -8,7 +8,6 @@ import cookie.textureswap.core.TextureJSON;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.texture.stitcher.IconCoordinate;
 import net.minecraft.client.render.texture.stitcher.TextureRegistry;
 import net.minecraft.core.item.*;
 import net.minecraft.core.util.helper.DyeColor;
