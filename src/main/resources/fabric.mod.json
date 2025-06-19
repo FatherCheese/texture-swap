@@ -27,6 +27,12 @@
 		],
 		"client": [
 			"cookie.textureswap.TextureSwapClient"
+		],
+		"beforeClientStart": [
+			"cookie.textureswap.TextureSwapClient"
+		],
+		"afterClientStart": [
+			"cookie.textureswap.TextureSwapClient"
 		]
 	},
   "mixins": [

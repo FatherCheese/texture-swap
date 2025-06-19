@@ -36,67 +36,75 @@ public class JSONDeserializer {
 		// Now we try to get the JSON location from the selected texturepacks.
 		// We also read the JSON if it's found and check if it even exists.
 		// We also check whether the config entries are empty.
-		try (InputStream inputStream = mc.texturePackList.getResourceAsStream(jsonLoc);
-			 InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
-			TextureJSON config = gson.fromJson(reader, TextureJSON.class);
-
-			if (config == null) {
+		try (InputStream inputStream = mc.texturePackList.getResourceAsStream(jsonLoc)) {
+			if (inputStream == null) {
 				TextureSwapClient.LOGGER.warn("Failed to find a textures.json file. Skipping.");
 				return;
 			}
 
-			if (config.getEntries().isEmpty()) {
-				return;
-			}
+			try (InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
+				TextureJSON config = gson.fromJson(reader, TextureJSON.class);
 
-			// If the entries ARE NOT null, we set an instance and run some
-			// for loops. We check through the entries and texture values,
-			// then try to register the textures.
-			TextureJSON.setInstance(config);
-
-			for (TextureEntry entry : config.getEntries()) {
-				if (entry.getTextures() != null) {
-					for (String texture : entry.getTextures().values()) {
-						TextureSwapClient.LOGGER.info("Preloading texture '{}'.", texture);
-
-						try {
-							TextureRegistry.getTexture(String.format("textureswap:item/%s", texture));
-							TextureSwapClient.LOGGER.info("Successfully loaded texture '{}'.", texture);
-							compareToItems(texture, entry);
-						} catch (Exception e) {
-							TextureSwapClient.LOGGER.error("Failed to find texture 'textureswap:item/{}' in the texture pack.", texture);
-						}
-					}
+				if (config == null) {
+					TextureSwapClient.LOGGER.warn("Failed to deserialize a textures.json file. Skipping.");
+					return;
 				}
 
-				// Now we try to get the conditional textures, checking for both
-				// item metadata and stack size. If EITHER EXISTS we compare it for
-				// some special cases.
-				if (entry.getConditional_textures() != null) {
-					try {
-						for (ConditionalTexture condition : entry.getConditional_textures()) {
-							for (String texture : condition.getTextures().values()) {
-								TextureSwapClient.LOGGER.info("Preloading conditional texture '{}'.", texture);
-								try {
-									TextureRegistry.getTexture(String.format("textureswap:item/%s", texture));
-									TextureSwapClient.LOGGER.info("Successfully loaded conditional texture '{}'.", texture);
-									compareToItems(texture, entry);
-								} catch (Exception ignored) {
-									TextureSwapClient.LOGGER.error("Failed to find conditional texture 'textureswap:item/{}' in the texture pack.", texture);
-								}
+				if (config.getEntries().isEmpty()) {
+					return;
+				}
+
+				// If the entries ARE NOT null, we set an instance and run some
+				// for loops. We check through the entries and texture values,
+				// then try to register the textures.
+				TextureJSON.setInstance(config);
+
+				for (TextureEntry entry : config.getEntries()) {
+					if (entry.getTextures() != null) {
+						for (String texture : entry.getTextures().values()) {
+							TextureSwapClient.LOGGER.info("Preloading texture '{}'.", texture);
+
+							try {
+								TextureRegistry.getTexture(String.format("textureswap:item/%s", texture));
+								TextureSwapClient.LOGGER.info("Successfully loaded texture '{}'.", texture);
+								compareToItems(texture, entry);
+							} catch (Exception e) {
+								TextureSwapClient.LOGGER.error("Failed to find texture 'textureswap:item/{}' in the texture pack.", texture);
 							}
 						}
-					} catch (NullPointerException ignored) {
-						TextureSwapClient.LOGGER.warn("Failed to find conditional textures for 'textureswap:item/{}'. Skipping.", entry.getItem().getNamespaceKey());
+					}
+
+					// Now we try to get the conditional textures, checking for both
+					// item metadata and stack size. If EITHER EXISTS we compare it for
+					// some special cases.
+					if (entry.getConditional_textures() != null) {
+						try {
+							for (ConditionalTexture condition : entry.getConditional_textures()) {
+								for (String texture : condition.getTextures().values()) {
+									TextureSwapClient.LOGGER.info("Preloading conditional texture '{}'.", texture);
+									try {
+										TextureRegistry.getTexture(String.format("textureswap:item/%s", texture));
+										TextureSwapClient.LOGGER.info("Successfully loaded conditional texture '{}'.", texture);
+										compareToItems(texture, entry);
+									} catch (Exception ignored) {
+										TextureSwapClient.LOGGER.error("Failed to find conditional texture 'textureswap:item/{}' in the texture pack.", texture);
+									}
+								}
+							}
+						} catch (NullPointerException ignored) {
+							TextureSwapClient.LOGGER.warn("Failed to find conditional textures for 'textureswap:item/{}'. Skipping.", entry.getItem().getNamespaceKey());
+						}
 					}
 				}
+			} catch (IOException e) {
+				TextureSwapClient.LOGGER.error("Failed to read a textures.json file.\n{}", e.getLocalizedMessage());
 			}
 		} catch (IOException e) {
 			TextureSwapClient.LOGGER.error("Failed to read a textures.json file.\n{}", e.getLocalizedMessage());
 		}
 	}
 
-	/**
+		/**
 	 * A method to compare the items, for special cases.
 	 * @param textureName The name of the texture that was loaded
 	 * @param entry The texture entry this texture belongs to
